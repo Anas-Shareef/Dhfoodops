@@ -1,6 +1,7 @@
 -- =====================================================================
 -- DH DINING MANAGEMENT SYSTEM (Phase 1 & Phase 2)
 -- Realistic Seed Data for Development and Testing
+-- All UUIDs strictly follow RFC 4122 hexadecimal syntax (0-9, a-f)
 -- =====================================================================
 
 -- 1. SEED DEPARTMENTS
@@ -13,12 +14,12 @@ ON CONFLICT (code) DO UPDATE SET name = EXCLUDED.name;
 
 -- 1B. SEED DINING HALLS & FLOORS (PRD Phase 3 Architecture Freeze Section 5)
 INSERT INTO public.dining_halls (id, name, code, status) VALUES
-    ('dh111111-1111-1111-1111-111111111111', 'PG Dining Hall', 'PG_HALL', 'active')
+    ('d0000001-1111-1111-1111-111111111111', 'PG Dining Hall', 'PG_HALL', 'active')
 ON CONFLICT (code) DO UPDATE SET name = EXCLUDED.name;
 
 INSERT INTO public.dining_floors (id, dining_hall_id, name, floor_number) VALUES
-    ('df111111-1111-1111-1111-111111111111', 'dh111111-1111-1111-1111-111111111111', 'Ground Floor', 0),
-    ('df222222-2222-2222-2222-222222222222', 'dh111111-1111-1111-1111-111111111111', 'First Floor', 1)
+    ('df111111-1111-1111-1111-111111111111', 'd0000001-1111-1111-1111-111111111111', 'Ground Floor', 0),
+    ('df222222-2222-2222-2222-222222222222', 'd0000001-1111-1111-1111-111111111111', 'First Floor', 1)
 ON CONFLICT (dining_hall_id, floor_number) DO UPDATE SET name = EXCLUDED.name;
 
 -- 2. SEED DINING AREAS (Phase 2 & 3 Hierarchy)
@@ -35,21 +36,21 @@ ON CONFLICT (name) DO UPDATE SET
 
 -- 3. SEED TABLES (Phase 2)
 INSERT INTO public.tables (id, table_number, dining_area_id, capacity, status, map_position) VALUES
-    ('t3111111-1111-1111-1111-111111111131', 31, 'a1111111-1111-1111-1111-111111111111', 8, 'Active', '{"row": 1, "col": 1}'),
-    ('t3222222-2222-2222-2222-222222222232', 32, 'a1111111-1111-1111-1111-111111111111', 8, 'Active', '{"row": 1, "col": 2}'),
-    ('t3333333-3333-3333-3333-333333333333', 33, 'a1111111-1111-1111-1111-111111111111', 8, 'Active', '{"row": 2, "col": 1}'),
-    ('t3444444-4444-4444-4444-444444444434', 34, 'a1111111-1111-1111-1111-111111111111', 8, 'Active', '{"row": 2, "col": 2}'),
-    ('t1222222-2222-2222-2222-222222222212', 12, 'a3333333-3333-3333-3333-333333333333', 8, 'Active', '{"row": 1, "col": 1}'),
-    ('t1555555-5555-5555-5555-555555555515', 15, 'a4444444-4444-4444-4444-444444444444', 8, 'Active', '{"row": 1, "col": 1}'),
-    ('t2111111-1111-1111-1111-111111111121', 21, 'a2222222-2222-2222-2222-222222222222', 8, 'Active', '{"row": 1, "col": 1}'),
-    ('t2222222-2222-2222-2222-222222222222', 22, 'a2222222-2222-2222-2222-222222222222', 8, 'Active', '{"row": 1, "col": 2}')
+    ('00311111-1111-1111-1111-111111111131', 31, 'a1111111-1111-1111-1111-111111111111', 8, 'Active', '{"row": 1, "col": 1}'),
+    ('00322222-2222-2222-2222-222222222232', 32, 'a1111111-1111-1111-1111-111111111111', 8, 'Active', '{"row": 1, "col": 2}'),
+    ('00333333-3333-3333-3333-333333333333', 33, 'a1111111-1111-1111-1111-111111111111', 8, 'Active', '{"row": 2, "col": 1}'),
+    ('00344444-4444-4444-4444-444444444434', 34, 'a1111111-1111-1111-1111-111111111111', 8, 'Active', '{"row": 2, "col": 2}'),
+    ('00122222-2222-2222-2222-222222222212', 12, 'a3333333-3333-3333-3333-333333333333', 8, 'Active', '{"row": 1, "col": 1}'),
+    ('00155555-5555-5555-5555-555555555515', 15, 'a4444444-4444-4444-4444-444444444444', 8, 'Active', '{"row": 1, "col": 1}'),
+    ('00211111-1111-1111-1111-111111111121', 21, 'a2222222-2222-2222-2222-222222222222', 8, 'Active', '{"row": 1, "col": 1}'),
+    ('00222222-2222-2222-2222-222222222222', 22, 'a2222222-2222-2222-2222-222222222222', 8, 'Active', '{"row": 1, "col": 2}')
 ON CONFLICT (table_number) DO UPDATE SET dining_area_id = EXCLUDED.dining_area_id, capacity = EXCLUDED.capacity;
 
 -- 4. SEED MEAL SCHEDULES
 INSERT INTO public.meal_schedules (id, meal_type, meal_time, attendance_start_time, attendance_end_time, is_active) VALUES
-    ('m1111111-1111-1111-1111-111111111111', 'breakfast', '08:30:00', '07:15:00', '07:45:00', true),
-    ('m2222222-2222-2222-2222-222222222222', 'lunch', '13:00:00', '11:45:00', '12:15:00', true),
-    ('m3333333-3333-3333-3333-333333333333', 'dinner', '20:00:00', '18:45:00', '19:15:00', true)
+    ('c1111111-1111-1111-1111-111111111111', 'breakfast', '08:30:00', '07:15:00', '07:45:00', true),
+    ('c2222222-2222-2222-2222-222222222222', 'lunch', '13:00:00', '11:45:00', '12:15:00', true),
+    ('c3333333-3333-3333-3333-333333333333', 'dinner', '20:00:00', '18:45:00', '19:15:00', true)
 ON CONFLICT DO NOTHING;
 
 -- 5. SEED USERS & PROFILES
@@ -59,20 +60,20 @@ BEGIN
         INSERT INTO auth.users (id, instance_id, email, encrypted_password, email_confirmed_at, raw_app_meta_data, raw_user_meta_data, created_at, updated_at, role)
         VALUES 
             ('a0000000-0000-0000-0000-000000000001', '00000000-0000-0000-0000-000000000000', 'admin@example.com', crypt('AdminPass123!', gen_salt('bf')), now(), '{"provider":"email","providers":["email"]}', '{"name":"System Admin","role":"ADMIN"}', now(), now(), 'authenticated'),
-            ('s0000000-0000-0000-0000-000000000001', '00000000-0000-0000-0000-000000000000', 'student@example.com', crypt('StudentPass123!', gen_salt('bf')), now(), '{"provider":"email","providers":["email"]}', '{"name":"Muhammed","role":"STUDENT"}', now(), now(), 'authenticated')
+            ('f0000000-0000-0000-0000-000000000001', '00000000-0000-0000-0000-000000000000', 'student@example.com', crypt('StudentPass123!', gen_salt('bf')), now(), '{"provider":"email","providers":["email"]}', '{"name":"Muhammed","role":"STUDENT"}', now(), now(), 'authenticated')
         ON CONFLICT (id) DO NOTHING;
     END IF;
 END $$;
 
 INSERT INTO public.profiles (id, auth_user_id, role) VALUES
-    ('p0000000-0000-0000-0000-000000000001', 'a0000000-0000-0000-0000-000000000001', 'ADMIN'),
-    ('p0000000-0000-0000-0000-000000000002', 's0000000-0000-0000-0000-000000000001', 'STUDENT')
+    ('00000001-0000-0000-0000-000000000001', 'a0000000-0000-0000-0000-000000000001', 'ADMIN'),
+    ('00000002-0000-0000-0000-000000000002', 'f0000000-0000-0000-0000-000000000001', 'STUDENT')
 ON CONFLICT (auth_user_id) DO NOTHING;
 
 -- 6. SEED STUDENTS (Including exact Table 31 roster from PRD Section 7 & 17)
 -- Table 31: 6 from QS2, 2 from QS1
 INSERT INTO public.students (id, auth_user_id, enrollment_no, name, email, department_id, year, table_number, status) VALUES
-    ('b1111111-1111-1111-1111-111111111111', 's0000000-0000-0000-0000-000000000001', '16889', 'Muhammed', 'student@example.com', 'd3333333-3333-3333-3333-333333333333', 2, 31, 'active'),
+    ('b1111111-1111-1111-1111-111111111111', 'f0000000-0000-0000-0000-000000000001', '16889', 'Muhammed', 'student@example.com', 'd3333333-3333-3333-3333-333333333333', 2, 31, 'active'),
     ('b1111111-1111-1111-1111-111111111112', NULL, '16960', 'Muhammed Alfas', 'alfas.16960@example.com', 'd3333333-3333-3333-3333-333333333333', 2, 31, 'active'),
     ('b1111111-1111-1111-1111-111111111113', NULL, '17028', 'Moosa Fayiz', 'fayiz.17028@example.com', 'd3333333-3333-3333-3333-333333333333', 2, 31, 'active'),
     ('b1111111-1111-1111-1111-111111111114', NULL, '17047', 'Mohammed Muzammil', 'muzammil.17047@example.com', 'd3333333-3333-3333-3333-333333333333', 2, 31, 'active'),
@@ -140,35 +141,36 @@ ON CONFLICT (enrollment_no) DO NOTHING;
 
 -- 11. SEED SUPPLIER DUTY PERIODS (September 2026)
 INSERT INTO public.supplier_duty_periods (id, name, start_date, end_date, status) VALUES
-    ('p-sep-2026', 'September 2026 Supplier Duty', '2026-09-01', '2026-09-30', 'active')
+    ('00002026-0901-0000-0000-000000000001', 'September 2026 Supplier Duty', '2026-09-01', '2026-09-30', 'active')
 ON CONFLICT DO NOTHING;
 
 -- 12. SEED SUPPLIER ASSIGNMENTS (PRD Phase 3 Architecture: Table, Area, and Teacher Area Scopes)
 INSERT INTO public.supplier_assignments (duty_period_id, scope_type, scope_id, table_id, dining_area_id, student_id, role, valid_from, valid_until, status) VALUES
-    ('p-sep-2026', 'TABLE', 't3111111-1111-1111-1111-111111111131', 't3111111-1111-1111-1111-111111111131', 'a1111111-1111-1111-1111-111111111111', 'b5555555-5555-5555-5555-555555555551', 'primary', '2026-09-01', '2026-09-30', 'active'),
-    ('p-sep-2026', 'TABLE', 't3111111-1111-1111-1111-111111111131', 't3111111-1111-1111-1111-111111111131', 'a1111111-1111-1111-1111-111111111111', 'b5555555-5555-5555-5555-555555555552', 'backup', '2026-09-01', '2026-09-30', 'active'),
-    ('p-sep-2026', 'AREA', 'a1111111-1111-1111-1111-111111111111', NULL, 'a1111111-1111-1111-1111-111111111111', 'b5555555-5555-5555-5555-555555555551', 'area_main', '2026-09-01', '2026-09-30', 'active'),
-    ('p-sep-2026', 'TEACHER_AREA', 'a5555555-5555-5555-5555-555555555555', NULL, 'a5555555-5555-5555-5555-555555555555', 'b4444444-4444-4444-4444-444444444433', 'teacher_supplier', '2026-09-01', '2026-09-30', 'active'),
-    ('p-sep-2026', 'TABLE', 't3222222-2222-2222-2222-222222222232', 't3222222-2222-2222-2222-222222222232', 'a1111111-1111-1111-1111-111111111111', 'b4444444-4444-4444-4444-444444444431', 'primary', '2026-09-01', '2026-09-30', 'active'),
-    ('p-sep-2026', 'TABLE', 't3222222-2222-2222-2222-222222222232', 't3222222-2222-2222-2222-222222222232', 'a1111111-1111-1111-1111-111111111111', 'b4444444-4444-4444-4444-444444444432', 'backup', '2026-09-01', '2026-09-30', 'active'),
-    ('p-sep-2026', 'TABLE', 't3444444-4444-4444-4444-444444444434', 't3444444-4444-4444-4444-444444444434', 'a1111111-1111-1111-1111-111111111111', 'b2222222-2222-2222-2222-222222222221', 'primary', '2026-09-01', '2026-09-30', 'active')
+    ('00002026-0901-0000-0000-000000000001', 'TABLE', '00311111-1111-1111-1111-111111111131', '00311111-1111-1111-1111-111111111131', 'a1111111-1111-1111-1111-111111111111', 'b5555555-5555-5555-5555-555555555551', 'primary', '2026-09-01', '2026-09-30', 'active'),
+    ('00002026-0901-0000-0000-000000000001', 'TABLE', '00311111-1111-1111-1111-111111111131', '00311111-1111-1111-1111-111111111131', 'a1111111-1111-1111-1111-111111111111', 'b5555555-5555-5555-5555-555555555552', 'backup', '2026-09-01', '2026-09-30', 'active'),
+    ('00002026-0901-0000-0000-000000000001', 'AREA', 'a1111111-1111-1111-1111-111111111111', NULL, 'a1111111-1111-1111-1111-111111111111', 'b5555555-5555-5555-5555-555555555551', 'area_main', '2026-09-01', '2026-09-30', 'active'),
+    ('00002026-0901-0000-0000-000000000001', 'TEACHER_AREA', 'a5555555-5555-5555-5555-555555555555', NULL, 'a5555555-5555-5555-5555-555555555555', 'b4444444-4444-4444-4444-444444444433', 'teacher_supplier', '2026-09-01', '2026-09-30', 'active'),
+    ('00002026-0901-0000-0000-000000000001', 'TABLE', '00322222-2222-2222-2222-222222222232', '00322222-2222-2222-2222-222222222232', 'a1111111-1111-1111-1111-111111111111', 'b4444444-4444-4444-4444-444444444431', 'primary', '2026-09-01', '2026-09-30', 'active'),
+    ('00002026-0901-0000-0000-000000000001', 'TABLE', '00322222-2222-2222-2222-222222222232', '00322222-2222-2222-2222-222222222232', 'a1111111-1111-1111-1111-111111111111', 'b4444444-4444-4444-4444-444444444432', 'backup', '2026-09-01', '2026-09-30', 'active'),
+    ('00002026-0901-0000-0000-000000000001', 'TABLE', '00344444-4444-4444-4444-444444444434', '00344444-4444-4444-4444-444444444434', 'a1111111-1111-1111-1111-111111111111', 'b2222222-2222-2222-2222-222222222221', 'primary', '2026-09-01', '2026-09-30', 'active')
 ON CONFLICT DO NOTHING;
 
 -- 12B. SEED SUPPLIER POOLS & ROTATION RULES (PRD Section 10 & 11)
 INSERT INTO public.supplier_rotation_rules (id, name, rule_type, frequency) VALUES
-    ('rr-round-robin', 'Standard Round-Robin Rotation', 'ROUND_ROBIN', 'MONTHLY')
+    ('00008001-0000-0000-0000-000000000001', 'Standard Round-Robin Rotation', 'ROUND_ROBIN', 'MONTHLY')
 ON CONFLICT DO NOTHING;
 
 INSERT INTO public.supplier_pools (id, name, dining_area_id, duty_period_id, status) VALUES
-    ('pool-chs-first', 'First Floor CHS Supplier Pool', 'a1111111-1111-1111-1111-111111111111', 'p-sep-2026', 'active')
+    ('00009001-0000-0000-0000-000000000001', 'First Floor CHS Supplier Pool', 'a1111111-1111-1111-1111-111111111111', '00002026-0901-0000-0000-000000000001', 'active')
 ON CONFLICT DO NOTHING;
 
 INSERT INTO public.supplier_pool_members (pool_id, student_id, priority, is_backup_eligible) VALUES
-    ('pool-chs-first', 'b5555555-5555-5555-5555-555555555551', 1, true),
-    ('pool-chs-first', 'b5555555-5555-5555-5555-555555555552', 2, true),
-    ('pool-chs-first', 'b4444444-4444-4444-4444-444444444431', 3, true),
-    ('pool-chs-first', 'b4444444-4444-4444-4444-444444444432', 4, true)
+    ('00009001-0000-0000-0000-000000000001', 'b5555555-5555-5555-5555-555555555551', 1, true),
+    ('00009001-0000-0000-0000-000000000001', 'b5555555-5555-5555-5555-555555555552', 2, true),
+    ('00009001-0000-0000-0000-000000000001', 'b4444444-4444-4444-4444-444444444431', 3, true),
+    ('00009001-0000-0000-0000-000000000001', 'b4444444-4444-4444-4444-444444444432', 4, true)
 ON CONFLICT DO NOTHING;
+
 -- 13. SEED FOOD ITEMS (Phase 4)
 INSERT INTO public.food_items (id, name, category, unit, default_consumption_factor, is_active) VALUES
     ('f0000001-0000-0000-0000-000000000001', 'Idli', 'main_dish', 'portions', 1.000, true),
@@ -185,7 +187,7 @@ ON CONFLICT DO NOTHING;
 DO $$
 DECLARE
     v_session_id UUID;
-    v_req_id UUID := 'r4444444-4444-4444-4444-444444444444';
+    v_req_id UUID := 'e4444444-4444-4444-4444-444444444444';
 BEGIN
     SELECT id INTO v_session_id 
     FROM public.meal_sessions 
@@ -236,9 +238,9 @@ END $$;
 
 -- 15. SEED UTENSIL TYPES (Phase 5: Plates, Glasses, Jugs)
 INSERT INTO public.utensil_types (id, name, code, unit, active) VALUES
-    ('u0000001-0000-0000-0000-000000000001', 'Dining Plate', 'PLATE', 'pieces', true),
-    ('u0000002-0000-0000-0000-000000000002', 'Drinking Glass', 'GLASS', 'pieces', true),
-    ('u0000003-0000-0000-0000-000000000003', 'Water Jug', 'JUG', 'pieces', true)
+    ('e0000001-0000-0000-0000-000000000001', 'Dining Plate', 'PLATE', 'pieces', true),
+    ('e0000002-0000-0000-0000-000000000002', 'Drinking Glass', 'GLASS', 'pieces', true),
+    ('e0000003-0000-0000-0000-000000000003', 'Water Jug', 'JUG', 'pieces', true)
 ON CONFLICT (code) DO NOTHING;
 
 -- 16. SEED TABLE UTENSIL CONFIGURATIONS (Table 31 Standard: 8 Plates, 8 Glasses, 1 Jug)
@@ -264,8 +266,8 @@ DECLARE
     v_session_id UUID;
     v_table31_id UUID;
     v_table32_id UUID;
-    v_op_session_id UUID := 'op311111-1111-1111-1111-111111111131';
-    v_glass_type_id UUID := 'u0000002-0000-0000-0000-000000000002';
+    v_op_session_id UUID := '00311111-1111-1111-1111-111111111131';
+    v_glass_type_id UUID := 'e0000002-0000-0000-0000-000000000002';
     v_ijas_id UUID := 'b5555555-5555-5555-5555-555555555551';
 BEGIN
     SELECT id INTO v_session_id FROM public.meal_sessions WHERE session_date = '2026-09-24' AND meal_type = 'breakfast' LIMIT 1;
@@ -287,9 +289,9 @@ BEGIN
         -- Operation items (Expected 8/8/1, Returned 8/8/1 after recovery)
         INSERT INTO public.utensil_operation_items (operation_session_id, utensil_type_id, expected_quantity, distributed_quantity, returned_quantity, unresolved_quantity)
         VALUES 
-            (v_op_session_id, 'u0000001-0000-0000-0000-000000000001', 8, 8, 8, 0),
-            (v_op_session_id, 'u0000002-0000-0000-0000-000000000002', 8, 8, 8, 0),
-            (v_op_session_id, 'u0000003-0000-0000-0000-000000000003', 1, 1, 1, 0)
+            (v_op_session_id, 'e0000001-0000-0000-0000-000000000001', 8, 8, 8, 0),
+            (v_op_session_id, 'e0000002-0000-0000-0000-000000000002', 8, 8, 8, 0),
+            (v_op_session_id, 'e0000003-0000-0000-0000-000000000003', 1, 1, 1, 0)
         ON CONFLICT DO NOTHING;
 
         -- Discrepancy record (1 Glass found at Table 32 -> RECOVERED)
@@ -314,6 +316,3 @@ BEGIN
             (v_op_session_id, v_table31_id, 'SHELF_CLOSED', '{"status": "All 8 Plates, 8 Glasses, 1 Jug verified"}'::jsonb);
     END IF;
 END $$;
-
-
-
