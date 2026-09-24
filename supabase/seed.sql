@@ -73,26 +73,26 @@ ON CONFLICT (auth_user_id) DO NOTHING;
 -- Table 31: 6 from QS2, 2 from QS1
 INSERT INTO public.students (id, auth_user_id, enrollment_no, name, email, department_id, year, table_number, status) VALUES
     ('b1111111-1111-1111-1111-111111111111', 's0000000-0000-0000-0000-000000000001', '16889', 'Muhammed', 'student@example.com', 'd3333333-3333-3333-3333-333333333333', 2, 31, 'active'),
-    ('b1111111-1111-1111-1111-111111111112', gen_random_uuid(), '16960', 'Muhammed Alfas', 'alfas.16960@example.com', 'd3333333-3333-3333-3333-333333333333', 2, 31, 'active'),
-    ('b1111111-1111-1111-1111-111111111113', gen_random_uuid(), '17028', 'Moosa Fayiz', 'fayiz.17028@example.com', 'd3333333-3333-3333-3333-333333333333', 2, 31, 'active'),
-    ('b1111111-1111-1111-1111-111111111114', gen_random_uuid(), '17047', 'Mohammed Muzammil', 'muzammil.17047@example.com', 'd3333333-3333-3333-3333-333333333333', 2, 31, 'active'),
-    ('b1111111-1111-1111-1111-111111111115', gen_random_uuid(), '17106', 'Muhammad Sabith', 'sabith.17106@example.com', 'd3333333-3333-3333-3333-333333333333', 2, 31, 'active'),
-    ('b1111111-1111-1111-1111-111111111116', gen_random_uuid(), '17195', 'Muhammed Hinan', 'hinan.17195@example.com', 'd3333333-3333-3333-3333-333333333333', 2, 31, 'active'),
-    ('b1111111-1111-1111-1111-111111111117', gen_random_uuid(), '17207', 'Muhammed Irfan', 'irfan.17207@example.com', 'd2222222-2222-2222-2222-222222222222', 1, 31, 'active'), -- QS1
-    ('b1111111-1111-1111-1111-111111111118', gen_random_uuid(), '17209', 'Muhammed Sanad', 'sanad.17209@example.com', 'd2222222-2222-2222-2222-222222222222', 1, 31, 'active')  -- QS1
+    ('b1111111-1111-1111-1111-111111111112', NULL, '16960', 'Muhammed Alfas', 'alfas.16960@example.com', 'd3333333-3333-3333-3333-333333333333', 2, 31, 'active'),
+    ('b1111111-1111-1111-1111-111111111113', NULL, '17028', 'Moosa Fayiz', 'fayiz.17028@example.com', 'd3333333-3333-3333-3333-333333333333', 2, 31, 'active'),
+    ('b1111111-1111-1111-1111-111111111114', NULL, '17047', 'Mohammed Muzammil', 'muzammil.17047@example.com', 'd3333333-3333-3333-3333-333333333333', 2, 31, 'active'),
+    ('b1111111-1111-1111-1111-111111111115', NULL, '17106', 'Muhammad Sabith', 'sabith.17106@example.com', 'd3333333-3333-3333-3333-333333333333', 2, 31, 'active'),
+    ('b1111111-1111-1111-1111-111111111116', NULL, '17195', 'Muhammed Hinan', 'hinan.17195@example.com', 'd3333333-3333-3333-3333-333333333333', 2, 31, 'active'),
+    ('b1111111-1111-1111-1111-111111111117', NULL, '17207', 'Muhammed Irfan', 'irfan.17207@example.com', 'd2222222-2222-2222-2222-222222222222', 1, 31, 'active'), -- QS1
+    ('b1111111-1111-1111-1111-111111111118', NULL, '17209', 'Muhammed Sanad', 'sanad.17209@example.com', 'd2222222-2222-2222-2222-222222222222', 1, 31, 'active')  -- QS1
 ON CONFLICT (enrollment_no) DO UPDATE 
 SET name = EXCLUDED.name, department_id = EXCLUDED.department_id, table_number = EXCLUDED.table_number;
 
 -- Other tables members (Table 32, Table 12, Table 15)
 INSERT INTO public.students (id, auth_user_id, enrollment_no, name, email, department_id, year, table_number, status) VALUES
-    ('b2222222-2222-2222-2222-222222222221', gen_random_uuid(), '15101', 'Abdullah Hashmi', 'abdullah.h@example.com', 'd1111111-1111-1111-1111-111111111111', 3, 12, 'active'),
-    ('b2222222-2222-2222-2222-222222222222', gen_random_uuid(), '15102', 'Ibrahim Patel', 'ibrahim.p@example.com', 'd1111111-1111-1111-1111-111111111111', 3, 12, 'active'),
-    ('b2222222-2222-2222-2222-222222222223', gen_random_uuid(), '15103', 'Yusuf Rawat', 'yusuf.r@example.com', 'd1111111-1111-1111-1111-111111111111', 3, 12, 'active'),
-    ('b3333333-3333-3333-3333-333333333331', gen_random_uuid(), '17201', 'Khalid Mahmood', 'khalid.m@example.com', 'd4444444-4444-4444-4444-444444444444', 1, 15, 'active'),
-    ('b3333333-3333-3333-3333-333333333332', gen_random_uuid(), '17202', 'Omar Farooq', 'omar.f@example.com', 'd4444444-4444-4444-4444-444444444444', 1, 15, 'active'),
-    ('b4444444-4444-4444-4444-444444444431', gen_random_uuid(), '16501', 'Zayd Ansari', 'zayd.a@example.com', 'd2222222-2222-2222-2222-222222222222', 1, 32, 'active'),
-    ('b4444444-4444-4444-4444-444444444432', gen_random_uuid(), '16502', 'Farhan Qadir', 'farhan.q@example.com', 'd2222222-2222-2222-2222-222222222222', 1, 32, 'active'),
-    ('b4444444-4444-4444-4444-444444444433', gen_random_uuid(), '16503', 'Rashid V.P.', 'rashid.vp@example.com', 'd3333333-3333-3333-3333-333333333333', 2, 32, 'active')
+    ('b2222222-2222-2222-2222-222222222221', NULL, '15101', 'Abdullah Hashmi', 'abdullah.h@example.com', 'd1111111-1111-1111-1111-111111111111', 3, 12, 'active'),
+    ('b2222222-2222-2222-2222-222222222222', NULL, '15102', 'Ibrahim Patel', 'ibrahim.p@example.com', 'd1111111-1111-1111-1111-111111111111', 3, 12, 'active'),
+    ('b2222222-2222-2222-2222-222222222223', NULL, '15103', 'Yusuf Rawat', 'yusuf.r@example.com', 'd1111111-1111-1111-1111-111111111111', 3, 12, 'active'),
+    ('b3333333-3333-3333-3333-333333333331', NULL, '17201', 'Khalid Mahmood', 'khalid.m@example.com', 'd4444444-4444-4444-4444-444444444444', 1, 15, 'active'),
+    ('b3333333-3333-3333-3333-333333333332', NULL, '17202', 'Omar Farooq', 'omar.f@example.com', 'd4444444-4444-4444-4444-444444444444', 1, 15, 'active'),
+    ('b4444444-4444-4444-4444-444444444431', NULL, '16501', 'Zayd Ansari', 'zayd.a@example.com', 'd2222222-2222-2222-2222-222222222222', 1, 32, 'active'),
+    ('b4444444-4444-4444-4444-444444444432', NULL, '16502', 'Farhan Qadir', 'farhan.q@example.com', 'd2222222-2222-2222-2222-222222222222', 1, 32, 'active'),
+    ('b4444444-4444-4444-4444-444444444433', NULL, '16503', 'Rashid V.P.', 'rashid.vp@example.com', 'd3333333-3333-3333-3333-333333333333', 2, 32, 'active')
 ON CONFLICT (enrollment_no) DO NOTHING;
 
 -- 7. SEED TABLE ASSIGNMENTS (Phase 2 Time-bounded assignments)
@@ -134,8 +134,8 @@ END $$;
 
 -- 10. SEED SUPPLIERS (Phase 3: Ijas K and Ahmed K)
 INSERT INTO public.students (id, auth_user_id, enrollment_no, name, email, department_id, year, table_number, status) VALUES
-    ('b5555555-5555-5555-5555-555555555551', gen_random_uuid(), '16880', 'Ijas K', 'ijas.k@example.com', 'd3333333-3333-3333-3333-333333333333', 2, 31, 'active'),
-    ('b5555555-5555-5555-5555-555555555552', gen_random_uuid(), '16881', 'Ahmed K', 'ahmed.k@example.com', 'd3333333-3333-3333-3333-333333333333', 2, 31, 'active')
+    ('b5555555-5555-5555-5555-555555555551', NULL, '16880', 'Ijas K', 'ijas.k@example.com', 'd3333333-3333-3333-3333-333333333333', 2, 31, 'active'),
+    ('b5555555-5555-5555-5555-555555555552', NULL, '16881', 'Ahmed K', 'ahmed.k@example.com', 'd3333333-3333-3333-3333-333333333333', 2, 31, 'active')
 ON CONFLICT (enrollment_no) DO NOTHING;
 
 -- 11. SEED SUPPLIER DUTY PERIODS (September 2026)
@@ -253,7 +253,7 @@ SELECT
         ELSE 8
     END,
     '2026-09-01'::DATE
-FROM public.dining_tables t
+FROM public.tables t
 CROSS JOIN public.utensil_types u
 WHERE t.table_number IN (31, 32, 33, 34)
 ON CONFLICT DO NOTHING;
@@ -269,8 +269,8 @@ DECLARE
     v_ijas_id UUID := 'b5555555-5555-5555-5555-555555555551';
 BEGIN
     SELECT id INTO v_session_id FROM public.meal_sessions WHERE session_date = '2026-09-24' AND meal_type = 'breakfast' LIMIT 1;
-    SELECT id INTO v_table31_id FROM public.dining_tables WHERE table_number = 31 LIMIT 1;
-    SELECT id INTO v_table32_id FROM public.dining_tables WHERE table_number = 32 LIMIT 1;
+    SELECT id INTO v_table31_id FROM public.tables WHERE table_number = 31 LIMIT 1;
+    SELECT id INTO v_table32_id FROM public.tables WHERE table_number = 32 LIMIT 1;
 
     IF v_table31_id IS NOT NULL AND v_session_id IS NOT NULL THEN
         -- Shelf operational session (Reconciled and Locked after recovery)

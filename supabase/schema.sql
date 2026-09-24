@@ -42,7 +42,7 @@ CREATE INDEX IF NOT EXISTS idx_departments_code ON public.departments(code);
 -- ---------------------------------------------------------------------
 CREATE TABLE IF NOT EXISTS public.students (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-    auth_user_id UUID NOT NULL UNIQUE REFERENCES auth.users(id) ON DELETE CASCADE,
+    auth_user_id UUID NULL UNIQUE REFERENCES auth.users(id) ON DELETE CASCADE,
     enrollment_no TEXT NOT NULL UNIQUE,
     name TEXT NOT NULL,
     email TEXT NOT NULL UNIQUE,
@@ -521,6 +521,9 @@ CREATE TABLE IF NOT EXISTS public.tables (
 CREATE INDEX IF NOT EXISTS idx_tables_area ON public.tables(dining_area_id);
 CREATE INDEX IF NOT EXISTS idx_tables_number ON public.tables(table_number);
 CREATE INDEX IF NOT EXISTS idx_tables_status ON public.tables(status);
+
+-- Compatibility view for queries referring to dining_tables
+CREATE OR REPLACE VIEW public.dining_tables AS SELECT * FROM public.tables;
 
 -- ---------------------------------------------------------------------
 -- 11. TABLE ASSIGNMENTS
@@ -1116,7 +1119,7 @@ CREATE INDEX IF NOT EXISTS idx_utensil_types_active ON public.utensil_types(acti
 -- ---------------------------------------------------------------------
 CREATE TABLE IF NOT EXISTS public.table_utensil_configurations (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-    table_id UUID NOT NULL REFERENCES public.dining_tables(id) ON DELETE CASCADE,
+    table_id UUID NOT NULL REFERENCES public.tables(id) ON DELETE CASCADE,
     utensil_type_id UUID NOT NULL REFERENCES public.utensil_types(id) ON DELETE RESTRICT,
     expected_quantity INT NOT NULL DEFAULT 8 CHECK (expected_quantity >= 0),
     effective_from DATE NOT NULL DEFAULT CURRENT_DATE,
@@ -1134,7 +1137,7 @@ CREATE INDEX IF NOT EXISTS idx_table_utensil_cfg_dates ON public.table_utensil_c
 -- ---------------------------------------------------------------------
 CREATE TABLE IF NOT EXISTS public.utensil_operation_sessions (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-    table_id UUID NOT NULL REFERENCES public.dining_tables(id) ON DELETE CASCADE,
+    table_id UUID NOT NULL REFERENCES public.tables(id) ON DELETE CASCADE,
     meal_session_id UUID REFERENCES public.meal_sessions(id) ON DELETE SET NULL,
     supplier_assignment_id UUID REFERENCES public.supplier_assignments(id) ON DELETE SET NULL,
     status TEXT NOT NULL DEFAULT 'LOCKED' CHECK (status IN (
@@ -1199,8 +1202,8 @@ CREATE TABLE IF NOT EXISTS public.utensil_discrepancies (
         'BROKEN', 
         'DISCARDED'
     )),
-    origin_table_id UUID NOT NULL REFERENCES public.dining_tables(id) ON DELETE CASCADE,
-    current_table_id UUID REFERENCES public.dining_tables(id) ON DELETE SET NULL,
+    origin_table_id UUID NOT NULL REFERENCES public.tables(id) ON DELETE CASCADE,
+    current_table_id UUID REFERENCES public.tables(id) ON DELETE SET NULL,
     reported_by UUID REFERENCES public.profiles(id) ON DELETE SET NULL,
     reported_at TIMESTAMPTZ NOT NULL DEFAULT now(),
     resolved_by UUID REFERENCES public.profiles(id) ON DELETE SET NULL,
@@ -1221,7 +1224,7 @@ CREATE INDEX IF NOT EXISTS idx_discrepancies_tables ON public.utensil_discrepanc
 CREATE TABLE IF NOT EXISTS public.utensil_events (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     operation_session_id UUID REFERENCES public.utensil_operation_sessions(id) ON DELETE CASCADE,
-    table_id UUID NOT NULL REFERENCES public.dining_tables(id) ON DELETE CASCADE,
+    table_id UUID NOT NULL REFERENCES public.tables(id) ON DELETE CASCADE,
     utensil_type_id UUID REFERENCES public.utensil_types(id) ON DELETE SET NULL,
     event_type TEXT NOT NULL CHECK (event_type IN (
         'SHELF_OPENED',
@@ -1415,7 +1418,7 @@ CREATE POLICY "Kitchen and admins can manage food surplus records" ON public.foo
 
 ALTER TABLE public.utensil_discrepancies 
     ADD COLUMN IF NOT EXISTS issue_type TEXT NOT NULL DEFAULT 'COUNT_MISMATCH',
-    ADD COLUMN IF NOT EXISTS source_table_id UUID REFERENCES public.dining_tables(id) ON DELETE SET NULL,
+    ADD COLUMN IF NOT EXISTS source_table_id UUID REFERENCES public.tables(id) ON DELETE SET NULL,
     ADD COLUMN IF NOT EXISTS found_by UUID REFERENCES public.profiles(id) ON DELETE SET NULL,
     ADD COLUMN IF NOT EXISTS found_at TIMESTAMPTZ NULL,
     ADD COLUMN IF NOT EXISTS return_confirmed_by UUID REFERENCES public.profiles(id) ON DELETE SET NULL,
